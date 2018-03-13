@@ -1,0 +1,36 @@
+	<header>        
+		<nav class="navbar nav-laranja" >
+            <div class="container-fluid">
+                <div class="navbar-header">	
+    				<a class="navbar-brand waves-effect waves-light menu-header-brand" href="#" onclick="return false;" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4" aria-expanded="false">
+	    				<button type="button" class="navbar-toggle btn-menu-expand">
+							<i class="fa fa-angle-down"></i>
+						</button>
+						<span ng-show="Aluno.isResponsavel() && Aluno.alunosResponsavel.length > 1">Alunos</span>
+						<span ng-show="Aluno.isResponsavel() && Aluno.alunosResponsavel.length == 1">Aluno</span>
+						<span ng-show="!Aluno.isResponsavel()">Aluno</span>						
+					</a>
+					<a class="fa fa-ellipsis-v burger-menu-top" id="burger-menu-top" onclick="return false;" aria-expanded="true"  href="#menu-opc" data-toggle="tab" ></a>
+				</div>
+                <div class="navbar-collapse collapse menu-body" id="bs-example-navbar-collapse-4" aria-expanded="false" style="height: 1px;">
+                    <ul class="nav navbar-nav menu-alunos" ng-repeat="aluno in Aluno.alunosResponsavel">
+                    	<li>
+							<label for="{{aluno.rm}}" class="menu-crianca-label">
+								
+								<div class="menu-crianca-foto">		
+									<img ng-show="aluno.sexo == 'M'" class="foto-kids" src="img/perfil/boy.jpg" alt="Foto Criança Menino" />
+									<img ng-show="aluno.sexo != 'M'" class="foto-kids" src="img/perfil/girl.jpg" alt="Foto Criança Menina" />
+								</div>
+								
+								<h4 class="waves-effect waves-light menu-crianca-h4">
+									{{aluno.nome_aluno}}
+									<span class="aluno-sub-header-info">({{aluno.cli.toUpperCase()}})</span>
+								</h4>
+								
+							</label>			
+						</li>
+					</ul>
+                </div>
+            </div>
+        </nav>
+	</header>

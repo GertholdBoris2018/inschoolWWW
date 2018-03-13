@@ -1,0 +1,13 @@
+<ul id="menu-modulos" class="nav nav-tabs tabs-4 tabs-principal">
+	<li ng-repeat="modulo in Aluno.modulos" class="modulos_principais" data-ng-class="{active: modulo.ordem == tabindex}">
+		<a data-toggle="tab" class="{{modulo.icon_src}}" href="#{{modulo.data_toggle}}" onclick="return false;">			
+		</a>		
+	</li>
+
+	<li id="modulo_secundario" style="display: none;">
+		<a data-toggle="tab" class="" href="" onclick="return false;">
+			<!-- <span class="badge badge-notify">3</span> -->		
+		</a>		
+	</li>
+	
+</ul>

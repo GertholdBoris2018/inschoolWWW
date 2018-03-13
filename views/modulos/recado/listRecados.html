@@ -1,0 +1,39 @@
+
+
+					<div class="row">
+						<ul>
+							<li ng-show="Aluno.qtdNotificacoes == 0" class="recados-zero">
+								Sem recados ainda.
+							</li>
+
+							<li ng-repeat="recado in Aluno.notificacoes" ng-show="Aluno.qtdNotificacoes != 0" class="card card-sac" ng-click="Aluno.detalhesRecado(recado)">
+
+						<div style="width: 100%">					
+								<h4 class="notificacoes-item" style="width: 92%; float:left;">
+									<i class="fa fa-envelope-o" />
+									<span>{{recado.titulo}}</span>
+								</h4>
+
+							<div style="width: 8%; float:left;text-align: center">								
+								<i ng-show="recado.checado_status == 0" class="fa fa-exclamation check-inschool-warning" aria-hidden="true"></i>
+							</div>
+
+						</div>
+
+						<p class="notificacoes-criado-por" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{recado.nome_aluno}}</p>	
+
+						<p class="recados-previa-text" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{recado.recado_strip | previewText}}</p>						
+
+						<div class="notificacoes-item-footer">
+							<span class="notificacoes-usuario">
+								<span class="notificacoes-criado-por">Criado por : {{recado.usuario | capitalizeFirstWord}}</span>
+								
+							</span>
+							<span class="notificacoes-dt" ng-class="{'fa fa-paperclip' : recado.arquivos.length}"> {{recado.criado_em}}</span>
+
+							</li>
+							
+
+						</ul>
+	
+					</div> <!-- /.row -->

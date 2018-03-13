@@ -1,0 +1,46 @@
+<div class="container" ng-include="'views/login/header-login.html'"></div>
+
+<main>
+	<!--Main layout-->
+	<div class="container" style="padding-top: 20px;">		
+		<form name="Login.AlunoForm" ng-submit="Login.doLogin(Login.form)" novalidate>
+
+			<!--
+				Campo 'type' é dinamico Hora cpf, hora nome, etc etc etc 
+			-->
+			<div>
+				<input type="text" ng-model="Login.form.login" placeholder="Login" />
+			</div>
+			
+			<div style="margin-bottom: 20px;">
+				<input type="password" ng-model="Login.form.senha" placeholder="Senha" style="width: 50%" />		
+				<button type="submit" name="action" class="btn btn-large primary-color-dark waves-effect waves-light col s12">Entrar</button>
+			
+			</div>
+			
+			
+
+		</form>
+
+				  	 	<div class="col-md-12">
+					  		<h2 class="meu-perfil-escolas-head" style="font-size: 15px;padding-left: 1px;">Escola selecionada : {{Login.url_escola}} - 
+							<a href="#logout_escola">
+								<i class="fa fa-sign-out menu-opc-fa" style="font-size: 26px;"></i>
+								Sair
+							</a>
+					  		 </h2>				  		
+					  						  			 		  		
+					  	</div>
+
+		<div ng-show="Login.inDev">				
+			<button type="button" class="btn btn-large green waves-effect waves-light col s12" ng-click="Login.doTestLogin()">Test User</button>
+		</div>
+
+		<div ng-show="Login.inFree">				
+			<button type="button" class="btn btn-large green waves-effect waves-light col s12" ng-click="Login.doFreeLogin()">Test Freelancer User</button>
+		</div>
+
+	</div> <!-- ./container-->
+</main>
+
+<div ng-include="'views/footer.html'"></div>

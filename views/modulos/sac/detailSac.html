@@ -1,0 +1,92 @@
+<!-- angle-up -->
+<div ng-include="'views/aluno/header-recado.html'"></div>
+<div class="container">
+	<main>
+		<hr class="hr-detalhes-page">
+		<div class="detalhe-recado-box">
+			<h5 style="text-align: center">{{sac.assunto}}</h5>	
+		
+		
+			<div class="col-md-12" style="padding-left: 0px;">
+		        <button class="form-control btn btn-success btn-encerrar-sac" ng-click="encerrarSac(sac.cod_sac)" ng-show="sac.status_nome!='Fechado'">
+					<span class="glyphicon glyphicon glyphicon-ok"></span> Encerrar Solicitação
+				</button>					
+				Aberto em : {{sac.aberto_em}}
+			</div>
+		
+		
+			<div class="panel panel-default" ng-repeat="anotacao in sac.anotacoes">
+				
+				<div class="panel-heading detalheSac-heading">
+		
+					<div class="footer-sac-anotacao">
+						{{anotacao.enviado_nome}}<br />{{anotacao.enviado_em}}
+					</div>
+		
+					<div style="float: left;width: 20%;text-align: center;">
+						<button ng-show="0" class="btn btn-danger btn-trash" ng-click="removerSacAnotacao(anotacao)"><span class="glyphicon glyphicon glyphicon-trash detalheSac-trash"></span></button>
+					</div>
+					
+				</div>
+		
+				<table class="table table-responsive table-striped table-arquivos-sac" ng-show="anotacao.arquivos.length != 0">
+					<thead>
+						<tr>		            
+							<th colspan="2">Anexos: </th>		            
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="arquivo in anotacao.arquivos">
+							<th scope="row">
+								<a ng-href="{{arquivo.arquivo_original}}" target="_new">{{arquivo.arquivo_original}}</a>
+							</th>
+							<td class="detalhe-recado-tamanho" stlye="width: 25%;">{{arquivo.tamanho}}</td>
+						</tr>
+					</tbody>
+				</table>		
+				
+				<div class="panel-body detalheSac-body">
+					{{anotacao.anotacao}}
+					
+				</div>
+			</div>
+			
+			<h3   ng-show="sac.status_nome!='Fechado'" style="font-size: 22px;">Nova Anotação:</h3>
+
+		
+		
+			<!--
+			<div ng-include="'views/aluno/formSac.html'"></div>
+			-->
+		
+		
+		    <form ng-submit="formNovoSac.$valid && adicionarNovaAnotacao(dados)"  ng-show="sac.status_nome!='Fechado'" name="formNovoSac" novalidate>
+
+				<div class="md-form">
+					<span class="error-field" ng-show="submitted == true && formNovoSac.anotacao.$error.required">Obrigatório</span>
+					<textarea ng-model="dados.anotacao" name="anotacao" class="form-control" placeholder="Preencha a mensagem" style="padding: 2px;height: 70px;" required></textarea>
+				</div>
+<!--		
+				<div ng-include="'views/aluno/formSac.html'"></div>		
+	-->	
+				<div class="text-center">
+					<button type="submit" name="action" class="btn btn-default btn-xs btn-size-med btn-laranja" ng-click="submitted = true" style="width: 90%;">Cadastrar Anotação</button>
+				</div>		
+		
+			</form>
+		
+			<!-- 
+			<hr>
+			<button ng-click="showMyVm()">Show VM</button>
+			-->
+		
+		
+		
+		
+			
+		
+		</div>
+</main>
+</div>
+
+

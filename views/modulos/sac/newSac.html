@@ -1,0 +1,62 @@
+<!-- angle-up -->
+<div ng-include="'views/aluno/header-recado.html'"></div>
+<div class="container">
+	<main>
+		<hr class="hr-detalhes-page" id="form-new-sac">
+		
+		
+		
+		<div class="detalhe-recado-box">
+		
+			<form ng-submit="formNovoSac.$valid && enviarNovoSac(dados)" name="formNovoSac" novalidate>
+		 
+		
+				<h3 style="font-size: 27px;">Novo Chamado:</h3>
+		
+				<div>
+					<span class="error-field" ng-show="submitted == true && formNovoSac.cod_fila.$error.required">Obrigatório</span>
+					<select class="inschool-select" name="cod_fila" ng-model="dados.cod_fila" ng-options="key as value for (key , value) in sacFilas track by key" required>
+						<option value="" disabled selected>Escolha a Área</option>		    
+					</select>
+		
+					<span class="error-field" ng-show="submitted == true && formNovoSac.sac_rm.$error.required">Obrigatório</span>
+					<select class="inschool-select" name="sac_rm" ng-model="dados.sac_rm" data-ng-options="fila.rm as fila.nome_aluno for fila in sacFilhos" required>
+						<option value="" disabled selected>Escolha o filho(a)</option>
+					</select>		
+		
+					<span class="error-field" ng-show="submitted == true && formNovoSac.cod_categoria.$error.required">Obrigatório</span>
+					<select class="inschool-select" name="cod_categoria" ng-model="dados.cod_categoria" ng-options="key as value for (key , value) in sacCategorias track by key" required>
+						<option value="" disabled selected>Escolha a Categoria</option>
+					</select>	
+				</div>
+		
+				<div class="md-form">
+					<span class="error-field" ng-show="submitted == true && formNovoSac.assunto.$error.required">Obrigatório</span>
+					<input type="text" name="assunto" ng-model="dados.assunto" class="form-control" placeholder="Preencha o Título" required/>
+				</div>
+		
+				<div class="md-form">
+					<span class="error-field" ng-show="submitted == true && formNovoSac.anotacao.$error.required">Obrigatório</span>
+					<textarea ng-model="dados.anotacao" name="anotacao" class="form-control" placeholder="Preencha a mensagem" style="padding: 2px;" required></textarea>
+				</div>
+		
+<!--
+				<div ng-include="'views/aluno/formSac.html'"></div>		
+	-->	
+				<div class="text-center">
+					<button type="submit" name="action" class="btn btn-default btn-xs btn-size-med btn-laranja" ng-click="submitted = true">Cadastrar</button>
+				</div>		
+						
+			</form>
+		
+		</div>
+		
+		<!--
+		<hr>
+		<button ng-click="xfd()">Click!</button>
+		-->
+</main>
+</div>
+
+
+

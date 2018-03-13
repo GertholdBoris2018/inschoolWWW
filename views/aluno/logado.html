@@ -1,0 +1,45 @@
+	<!-- angle-up -->
+	<div ng-include="'views/aluno/header-aluno.html'"></div>
+
+	<main>
+	<!--Main layout-->
+		<div class="container">
+			<div class="box-menu-modulos" ng-include="'views/modulos/mainmenu/listMainMenu.html'">
+			</div>
+
+			<div class="tab-content">
+
+   				<!--start main menus / inicio dos menus principais -->
+				<div id="recados" class="tab-pane fade in " data-ng-class="{active: tabindex == 1}" ng-include="'views/modulos/recado/listRecados.html'">
+				</div><!-- / #recados -->
+
+
+				<div id="sac" class="tab-pane fade in" data-ng-class="{active: tabindex == 4}" ng-include="'views/modulos/sac/listSAC.html'">
+				</div><!-- / #sac -->
+
+				<!--end main menus / fim dos  menus principais -->
+
+				<!-- top burguer menu -->
+				<div id="menu-opc" class="tab-pane fade in" ng-include="'views/modulos/topmenu/showTopMenu.html'">
+				</div><!-- / #menu-opc -->
+
+
+				<!--start secondary menus / inicio  menus secundarios -->
+				<!-- / #myprofile -->
+				<div id="meu-perfil" class="tab-pane fade in"  ng-include="'views/modulos/meuperfil/listMeuPerfil.html'">
+				</div>
+
+				<!-- / #school contact -->
+				<div id="contatos" class="tab-pane fade in" ng-include="'views/modulos/contatos/listContatos.html'">
+				</div>
+
+				<!-- / #about -->
+				<div id="sobre" class="tab-pane fade in" ng-include="'views/modulos/sobre/listSobre.html'">
+				</div>
+
+				<!--end secondary menus / fim dos menus secundarios -->
+
+
+			</div> <!-- /.tab-content -->
+		</div> <!-- /.container -->
+	</main><!--/.Main layout -->

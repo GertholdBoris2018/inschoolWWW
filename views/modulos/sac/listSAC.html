@@ -1,0 +1,36 @@
+					<div class="row">
+				    	<div class="col-md-12 sub-menu-tab">				    		
+				    		<span>SAC</span>
+					  		<a href="#" onclick="return false;" class="btn-add-chamado" ng-click="Aluno.novoSac()" >
+								<i class="fa fa-plus-circle pull-right" aria-hidden="true"></i>
+							</a>
+						</div>						
+				    </div>
+					
+
+
+					<div class="row">
+						<ul>
+							<li ng-show="Aluno.qtdSacs == 0" class="sac-nenhum-recado">
+								Nenhum SAC
+							</li>
+
+							<li ng-repeat="sac in Aluno.sacDados" ng-show="Aluno.qtdSacs != 0" class="card card-sac" ng-click="Aluno.detalhesSac(sac)">
+								
+								<h3 class="sac-header">{{sac.assunto}}</h3>
+
+								
+								{{sac.aliibuido_nome}}
+								{{sac.status_nome}}	
+
+
+													
+								<hr>
+								{{sac.aberto_em}} - {{sac.categoria_nome}}
+
+							</li>
+							
+
+						</ul>
+	
+					</div> <!-- /.row -->

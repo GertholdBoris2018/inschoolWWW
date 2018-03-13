@@ -1,0 +1,763 @@
+/**
+ * Demo Styles
+ */
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+
+body{
+    height: 100%;
+}
+
+/*Garante que o Footer esteja no footer*/
+.main-system{
+    /* min-height: 429px; */
+    height: 100%;
+
+}
+
+main{
+    /* min-height: 76%; */
+}
+
+/* Login */
+.h2-login{
+    font-size: 23px;    
+}
+
+.header-login{
+    text-align: left;
+	padding-left: 15px;
+}
+
+
+.inschool-logo{
+    padding-top: 19px;
+    width: 89%;
+	max-width: 350px;
+}
+
+.nav-laranja{
+	background-color: #ff6600 !important;
+	margin-bottom: 5px;
+}
+
+.btn-menu-expand{
+	border-style: none;
+    padding: 0px 10px;    
+    float: left;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.menu-header-brand{
+    font-weight: bold;
+    color: #fff;
+    font-size: 21px;
+    height: 53px;
+    padding-top: 14px;    
+}
+
+.list-tels li{
+    padding: 4px 15px;
+    font-size: 13px;    
+    position: relative;
+    display: block;    
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+
+}
+
+.burger-menu-top:active, .burger-menu-top:visited, .burger-menu-top:focus, .burger-menu-top:hover {
+    color: #000000;
+}
+
+.burger-menu-top{
+    font-size: 29px;
+    color: #000000;
+    display: block;
+    float: right;
+    padding: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.navbar .navbar-brand{
+    height:50px;
+    line-height:20px !important;
+}
+
+.menu-body ul{
+	background-color: #fff;
+}
+
+.menu-body ul li{
+	height: 50px;
+}
+
+
+.checkbox-menu{
+	width: 26%;
+}
+
+.lavebel-select-all{
+	font-size: 15px;
+    color: #f60;    
+}
+
+
+.menu-crianca-label{
+    width: 100%;
+    height: 100%
+}
+
+.menu-crianca-divcheck{
+    width: 7%;
+    height: 100%;
+    float: left;
+    padding-top: 11px;
+}
+
+.menu-crianca-h4{
+    margin: 0px;
+    margin-top: 4px;
+
+    color: #ff6600 !important;
+    font-size: 17px;
+    font-weight: bold;
+
+    width: 70%;
+    height: 100%;
+    float: left;
+    padding-left: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.menu-crianca-foto{
+    width: 15%;
+    height: 100%;
+    float: left;
+}
+
+
+.menu-10{
+    width: 10%;
+    height: 100%;
+    float: left;
+}
+
+.menu-7{
+    width: 7%;
+    height: 100%;
+    float: left;
+}
+
+
+.menu-17{
+	width: 17%;
+	float: left;
+}
+
+.menu-middle{
+	width: 70%;
+	float: left;
+	text-align: left;
+	padding-left: 18px;
+}
+
+.aluno-sub-header-info{
+    font-size: 13px;
+    color: #000;
+    display: block;
+}
+
+.menu-13{
+	width: 13%;
+	float: left;
+}
+
+
+.menu-bell{
+    font-size: 26px;
+    color: #5d5d5d;
+}
+
+.navbar-form{
+	background-color: #fff;
+}
+
+    
+
+.tabs-4{
+	margin-bottom: 11px;
+}
+
+.tabs-4 li{
+	width: 25%;
+	text-align: center;
+}
+
+.menu-alunos li{
+	padding: 4px;
+}
+
+.foto-kids{
+	border: 1px solid;
+    border-radius: 6px;
+    color: #f60;
+}
+
+.dt-calendar-event{
+	font-size: 28px;
+	font-weight: bold;
+    color: #f60;
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 3px;
+    padding-right: 6px;
+}
+	
+.menu-alunos li a{
+	color: #ff6600 !important;
+	font-size: 17px;
+    font-weight: bold;
+}
+
+.event-sub-block{
+	padding-left: 13px;
+	margin-left: 13px;
+	border-left: 1px solid;
+    color: #f60;
+	padding-bottom: 5px;
+	font-size: 12px;
+	color: #f60;
+}
+
+.event-sub-block-text{
+    color: #000;
+    padding-top: 7px;
+}
+
+.row-event-block{
+    height: 100%;
+    position: relative;
+}
+
+.event-sub-block-time{	
+    bottom: 0px;
+    position: absolute;
+    right: 2px;
+}
+
+.event-sub-block-hr{
+	margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.event-hr{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.crianca-eventos{
+	padding-top: 13px;	
+}
+
+.tabs-principal{
+    margin-bottom: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+	
+.callendar-ui{
+	padding-bottom: 10px;
+    padding-top: 10px;
+	background-color: #e6e6e6;
+	color: #666666;
+}
+
+footer.page-footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #efefef;
+  text-align: center;
+  font-size: 18px;
+}
+
+footer.footer-copyright{
+	font-size: 18px;
+}
+h4.notificacoes-item{
+    font-size: 20px;
+    padding-bottom: 3px;
+    margin: 0px;
+    margin-top: 6px;
+    margin-bottom: 1px;
+    font-weight: bold;
+}
+
+#recados{
+    /* padding-top: 10px; */
+}
+
+.notificacoes-itens{
+    /*padding: 5px;*/
+}
+
+.recados-zero{
+    padding: 21px;
+    text-align: center;
+    font-size: 33px;
+}
+
+.recados-previa-text{
+    font-size: 18px;
+    margin: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    min-height: 7px;
+    font-weight: initial;
+}
+
+.nav-tabs>li {
+    margin-bottom: -3px;
+}
+
+.notificacoes-item i{
+	padding: 4px;    
+    font-size: 18px;
+    color: #f60;
+    border: 1px solid #f60!important;
+    border-radius: 7px!important;
+    display: block;
+    float: left;    
+    margin-right: 7px;
+    margin-top: -3px;
+}
+
+
+.notificacoes-item-footer{
+    color: #000;
+    font-size: 11px;
+}
+
+.notificacoes-dt{
+    float: right;    
+}
+
+.notificacoes-usuario{
+    float: left;    
+}
+
+
+.notificao-hr{
+    margin-bottom: 2px;
+    margin-top: 20px;
+
+    display: block;
+    width: 100%;
+
+}
+    
+
+
+/* CSS used here will be applied after bootstrap.css */
+.badge-notify{
+  	background: red;
+    position: relative;
+    top: 0px;
+    left: 32px;
+    position: absolute;
+}
+
+.tabs-principal li a{
+    font-size: 22px;
+    color: #000;
+}
+
+.menu-opc-ul li{
+    padding-top: 0px;
+    padding-bottom: 30px;
+}
+
+.menu-opc-ul li a{
+	font-size: 22px;
+    color: #000;
+    font-weight: 300;
+}
+
+
+
+.menu-opc-fa{
+	font-size: 20px;
+	color: #f60;
+}
+
+
+.menu-opc-hr {
+	margin-bottom: 0px;
+    margin-top: 0px;    
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.primary-color-dark {
+    background-color: #f60!important;
+}
+
+.tab-field-text, .tab-item-head{
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+    line-height: initial;
+}
+
+.tab-item-head{
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.meu-perfil-help{
+    padding-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.title-dev-by{
+    font-size: 16px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.meu-perfil-escolas-head{
+    font-size: 22px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+
+
+.logo-sisalu{
+    width: 80%;
+    padding-top: 16px;
+    padding-bottom: 0px;
+}
+
+.logo-sisalu-text{
+    text-align: left;
+    padding-left: 34px;
+    font-size: 18px;
+}
+
+.box-menu-modulos{
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+li.modulos_principais a{    
+    font-size: 35px;
+    padding: 0px 5px;
+}
+
+    
+
+/* Fancy Ajusts */
+
+.fancymodal{
+    padding-left: 12px;
+    padding-top: 61px;
+    padding-bottom: 0px;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.fancymodal-content-opening{
+    max-width: 500px;   
+    min-height: 90%;    
+}
+
+.fancymodal .fancymodal-content{
+    border-radius: 0px;
+}
+
+.fancymodal, .fancymodal *, .fancymodal *:before, .fancymodal *:after{
+    left: 0px;
+}
+
+.fancymodal .fancymodal-content-opening{
+    background: #fff;
+}
+
+.fancymodal .fancymodal-close{
+    height: 40px;
+    }    
+
+.fancymodal .fancymodal-close:before{
+    display: block;
+    content: "\02190";
+    font-size: 35px;
+    color: #ff6600;
+}
+
+
+
+.fancymodal{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.fancymodal-content-opening{
+    min-height: 100%;
+}
+
+
+/* Detalhe Recado */
+.detalhe-recado h5{    
+    margin-top: 3px;
+}
+
+.registerIdView{
+    word-wrap: break-word;      /* IE 5.5-7 */
+    white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;      /* current browsers */
+    font-size: 10px;
+}
+
+.detalhe-recado-content{
+    font-size: 13px;
+}
+
+.detalhe-separator{
+    border-top: 1px solid #1d1d1d;
+}
+
+.detalhe-recado-footer{
+    font-size: 11px;
+}
+
+.detalhe-criadopor{
+    display: block;
+}
+.detalhe-criadopor-user{
+    display: block;
+}
+
+.detalhe-dt{
+    display: block;
+}
+
+.detalhe-anexo-icon{
+    font-size: 14px;
+    color: #000;
+    padding-right: 4px;
+}
+
+.detalhe-recado-tamanho{
+    font-size: 10px;
+}
+
+.detalhe-recado-box .table-striped{
+    font-size: 11px;
+}
+
+.detalhe-recado-box .table-striped thead{
+    font-size: 19px;
+}
+
+.check-inschool-warning{
+    color: #f00;
+    font-size: 23px;
+}
+.check-inschool-ok{
+    color: #7cc51d;
+    font-size: 23px;
+}
+
+.notificacoes-criado-por{
+    font-size: 13px;
+}
+
+
+.card-sac{
+    padding: 10px;
+    margin-top: 0px;
+    margin: 4px;
+}
+
+.sac-header{
+    font-size: 20px;
+    
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+
+.sac-nenhum-recado{
+    padding: 10px;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;    
+    padding-top: 30px;
+}
+
+
+
+.card, .card-panel {
+    background-color: #fff;
+    transition: box-shadow 0.5s;
+    border-radius: 7px;
+}
+
+.card-sac {
+    padding: 10px;
+    margin-top: 11px;
+    margin: 15px;
+    margin-left: 12px;
+    margin-right: 12px;
+    padding-top: 10px;
+    margin-top: 8px;
+}
+
+.card, .card-panel{
+    box-shadow: 0 0px 0px 0 rgba(245, 224, 224, 0.16), 0 0px 10px 0 rgba(95, 86, 86, 0.5);
+}
+
+.hr-detalhes-page{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.btn-trash{    
+    margin: 0px;
+    padding: 10px;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    border-radius: 20px;
+}
+
+.footer-sac-anotacao{
+    font-size: 12px;
+    width: 80%;
+    float: left;
+}
+
+
+.sub-menu-tab{
+    font-size: 27px;
+    padding: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #ffffff;
+    border-width: 1px;
+    border-bottom-color: #777777;
+    border-bottom-style: solid;
+}
+
+.btn-add-chamado {
+    font-size: 31px;
+    color: #555555;
+}
+
+.btn-add-chamado i{
+    padding-top: 7px
+}
+
+.btn-upload-sac {
+    border-radius: 4px;
+    padding: 7px;
+    background-color: #9c9c9b;
+    margin-left: 0px;
+}
+    
+
+.inschool-select{
+    width: 100%;
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+    
+
+.btn-laranja {
+    background-color: #ec7c31;
+}
+
+.btn-size-med {    
+    padding: 16px;
+}
+
+.error-field {
+    display: block;
+    color: #F44336;
+    opacity: 1;
+    font-size: 10px;    
+}
+
+.detalheSac-heading {
+    background-color: #eaeaea;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 48px;
+}
+
+.detalheSac-body {    
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 50px;
+}
+
+/*
+.table-arquivos-sac{
+    font-size: 17px;
+    padding-bottom: 15px;
+}
+
+*/
+    
+.table-anexo {
+    border: 0px;
+}
+
+
+.table-anexo tfoot tr td {
+    padding: : 0px;
+}
+
+
+.btn-encerrar-sac {
+    padding-bottom: 35px;
+}
+
+.modulos_secundarios {
+    display: block;
+}
+.detailheader{
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}

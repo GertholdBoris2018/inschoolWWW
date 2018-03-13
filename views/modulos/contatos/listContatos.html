@@ -1,0 +1,30 @@
+					<div class="row" ng-repeat="escola in Aluno.dados_escolas">
+						<div class="col-md-12" style="padding-top: 8px;">
+							<span style="font-size: 23px;font-weight: initial;font-weight: bold;">{{escola.nome_escola}}</span>
+						</div>
+						<div class="col-md-12">
+					  		<p class="tab-item-head">Endereço:</p>
+					  		<p class="tab-field-text">
+					  			{{escola.end_escola}}, {{escola.numend_escola}} - {{escola.bairro_escola}},<br />CEP: {{escola.cep_escola}} {{escola.cidade_escola}} / {{escola.uf_escola}}
+					  		</p>					  		
+					  	</div>
+					  	<div class="col-md-12">
+					  		<p class="tab-item-head">Telefone:</p>
+					  		<p class="tab-field-text">
+					  			<a href="tel:{{escola.tel_escola}}">{{escola.tel_escola}}</a>
+					  		</p>
+					  	</div>
+					  	<div class="col-md-12">
+					  		<p class="tab-item-head">Email:</p>
+					  		<p class="tab-field-text">
+					  			<a href="mailto:{{escola.email}}">{{escola.email}}</a>					  			
+					  		</p>
+					  	</div>
+					  	<div class="col-md-12">
+					  		<p class="tab-item-head">Site:</p>
+					  		<p class="tab-field-text">
+					  			<a ng-href="{{escola.website | makeSureSite}}" target="_new">{{escola.website}}</a>
+					  		</p>
+					  		<hr />
+					  	</div>
+				  	</div> <!--./row -->

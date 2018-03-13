@@ -1,0 +1,40 @@
+<main>
+	<div class="container" ng-include="'views/login/header-login.html'"></div>
+		
+	<div class="container">
+		<h2 class="h2-login">Preencha o código fornecido pela sua escola:</h2>
+		<form name="Login.LoginForm" ng-submit="Login.getEscola(Login.form)" novalidate>
+			<div>
+				<input type="tel" ng-model="Login.form.cod_escola" placeholder="Código da escola" style="width: 50%"  />
+
+				<button type="submit" name="action" class="btn btn-large primary-color-dark waves-effect waves-light col s12">Acessar</button>
+			</div>
+
+
+			
+			
+			<div ng-show="Login.inDev">
+				<br />
+				<button type="button" name="action" class="btn btn-large green waves-effect waves-light col s12" ng-click="Login.getEscolaTest()">Access - DEMO</button>
+			</div>
+
+			<div ng-show="Login.inFree">
+				<br />
+				<button type="button" name="action" class="btn btn-large green waves-effect waves-light col s12" ng-click="Login.getEscolaFree()">Access Freelancer - DEMO</button>
+			</div>
+
+<!--
+
+			<br />
+			<button type="button" name="action" class="btn btn-large green waves-effect waves-light col s12" ng-click="Login.getEscolaTest()">Acessar - CABRINI</button>
+
+			
+			<hr />	
+			<button type="button" class="btn btn-large green waves-effect waves-light col s12" ng-click="Login.doTestHeader()">Testar HEADER.</button>
+			-->
+
+		</form>
+	</div> <!-- ./container-->
+</main>
+
+<div ng-include="'views/footer.html'"></div>

@@ -1,0 +1,83 @@
+					<div class="row">
+
+						<!-- Exibe todos os Dados pessoais basicos dos bancos encontrados -->
+						<div id="dados-pessoais-login" ng-repeat="login in Aluno.logins">
+
+							<!-- Modelo Responsavel -->
+
+							<div class="col-md-12" ng-show="0">
+						  		<p class="tab-item-head"> - {{login.tipo | castLoginTipo}}</p>						  	
+							  	</div>				
+
+							<div class="col-md-12">
+						  		<p class="tab-item-head">Nome:</p>
+						  		<p class="tab-field-text text-capitalize">{{login.nome | capitalize}}</p>
+						  	</div>				
+
+						  	<div class="col-md-12">
+								<h2 class="meu-perfil-escolas-head" style="font-size: 15px;padding-left: 1px;margin-top: 10px;">Telefones:</h2>
+								<ul class="list-tels">					  			
+									<li ng-show="login.telres != null && login.telres.trim() != ''" >{{login.telres}}</li>
+									<li ng-show="login.cel != null && login.cel.trim() != ''"       >{{login.cel}}</li>
+									<li ng-show="login.telrecado != null && login.telrecado.trim() != ''" >{{login.telrecado}}</li>
+									<li ng-show="login.telcom != null && login.telcom.trim() != ''" >{{login.telcom}}</li>
+								</ul>
+							</div>
+
+						  	<div class="col-md-12">
+						  		<p class="tab-item-head">Email:</p>
+						  		<p class="tab-field-text">{{login.email.toLowerCase()}}</p>
+						  	</div>
+
+						  	<div class="col-md-12">
+						  		<p class="tab-item-head">Endereço:</p>
+						  		<p class="tab-field-text">
+						  			<adress>
+						  				{{login.endereco | capitalize}}, {{login.numero}} {{login.complemento | capitalize}} - {{login.bairro | capitalize}},<br />CEP: {{login.cep}} {{login.cidade}} / {{login.uf.toUpperCase()}}
+						  			</adress>
+						  		</p>
+						  		
+					  			
+					  		
+						  	</div>
+
+			  			  	<div class="col-md-12">
+						  		<p class="tab-field-text meu-perfil-help" >
+						  			Caso as informações acima estejam desatualizadas, informe a sua escola.
+						  		</p>
+						  	</div>
+
+						  	<div class="col-md-12">
+						  		<hr />
+						  	</div>
+
+
+						  	
+
+						  	<!-- /Modelo Responsavel -->
+						</div>
+						<!-- /#dados-pessoais-login -->
+
+		  			 
+				  	 	<div class="col-md-12">
+					  		<h2 class="meu-perfil-escolas-head" style="font-size: 15px;padding-left: 1px;">Escolas Cadastradas:</h2>				  		
+				  			<ul class="list-group">					  			
+								<li class="list-group-item" ng-repeat="escola in Aluno.dados_escolas" style="font-size: 13px;">{{escola.nome_escola}} ({{escola.bairro_escola}})
+								</li>									
+							</ul>					  		
+					  	</div>
+
+				  	 	<div class="col-md-12">
+					  		<p class="tab-item-head">Device Register:</p>
+					  		<p class="tab-field-text registerIdView">{{Aluno.registerIdView}}</p>
+                              <p class="tab-field-text registerIdView">plataforma - {{Aluno.platformView}}</p>
+
+					  	</div>
+
+					  	<div class="col-md-12" style="padding: 15px;text-align: center;font-size: 20px;">
+					  		<a href="#logout">
+								<i class="fa fa-sign-out menu-opc-fa" style="font-size: 26px;"></i>
+								Sair
+							</a>
+						</div>
+					</div> <!-- /.row -->

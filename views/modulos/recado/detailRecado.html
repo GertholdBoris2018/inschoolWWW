@@ -1,0 +1,78 @@
+
+<!-- angle-up -->
+<div ng-include="'views/aluno/header-recado.html'"></div>
+<div class="container">
+	<main>
+		<!--Main layout-->
+		<hr class="hr-detalhes-page">
+	
+		<div class="detalhe-recado-box">
+			<span style="display:none">COD: {{recado.cod_recado}}</span>
+
+						<div style="width: 100%">					
+								<h4 class="notificacoes-item" style="width: 92%; float:left;">
+									<i class="fa fa-envelope-o" />
+									<span>{{recado.titulo}}</span>
+								</h4>
+
+
+						</div>
+
+
+			<p class="notificacoes-criado-por" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{recado.nome_aluno}}</p>	
+
+			<p>{{recado.nome_mat}} - {{recado.sigla}}</p>
+
+
+			<p class="detalhe-recado-content" ng-bind-html="recado.recado | trustHTML"></p>
+	
+			
+			<table class="table-responsive table-striped" ng-show="recado.arquivos.length != 0">
+				<thead>
+					<tr>		            
+						<th colspan="2">Anexos: </th>		            
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="rowRecado in recado.arquivos">
+						<th scope="row">
+							<a ng-href="{{rowRecado.link_download}}" target="_new">{{rowRecado.arquivo_original}}</a>
+						</th>
+						<td class="detalhe-recado-tamanho">{{rowRecado.tamanho}}</td>
+					</tr>		        
+				</tbody>
+			</table>
+			
+			
+			
+			<hr class="detalhe-separator" />
+			<div class="detalhe-recado-footer">
+							<span class="notificacoes-usuario">
+								<span class="notificacoes-criado-por">Criado por : {{recado.usuario | capitalizeFirstWord}}</span>
+								
+							</span>
+							<span class="notificacoes-dt" > {{recado.criado_em}}</span>
+			</div>
+	
+			<div style="text-align: center;width: 100%;padding-top: 30px;">
+				
+				<div ng-show="recado.checado_status == 0">
+					<button type="button" class="btn btn-large green waves-effect waves-light" ng-click="confirmarRecado()">Estou ciente</button>
+				</div>
+				
+				<span ng-show="recado.checado_status == 1 && recado.checado_em != ''">Confirmado em: {{recado.checado_em}}</span>
+	
+			</div>
+	
+			
+	
+			
+	
+			
+			
+			
+			
+		</div><!-- Node-bind fica aqui-->
+	</main>
+</div>
+
