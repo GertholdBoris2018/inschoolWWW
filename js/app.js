@@ -713,7 +713,6 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 			,cli 			: vm.alunosResponsavel[x]['cli']
 			,aberto_por  	: getCodResponsavel()
 		}).then(function successCallback(response) {
-
 			//'data' é utilizado no datatables do site tmb xD
 			var json = response.data.dados;	
 			//console.log('sac Dados ->',  json);
@@ -724,40 +723,73 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 			vm.qtdSacs = vm.sacDados.length;
 			//console.log(vm.qtdSacs);
 
-		}, function errorCallback(response) {			
-			
+		}, function errorCallback(response) {
 			if(localStorage.getItem('sacDados') != null){
 				vm.sacDados = JSON.parse(localStorage.getItem('sacDados'));
 				vm.qtdSacs = vm.sacDados.length;					
 			}		
 		});
 
+		//alert('here');
 		vm.homeworkDados = {};
-		// const last_hash ="";
-		// if(localStorage.getItem('last_hash')!= null){
-		// 	last_hash = localStorage.getItem('last_hash');
-		// }
+		if(localStorage.getItem('last_hash') != null){
+			vm.last_hash = localStorage.getItem('last_hash');
+		} else {
+			vm.last_hash = '';
+		}
+		alert(vm.last_hash);
 		HomeWkService.allHomeWorks({
 			cli: vm.alunosResponsavel[x]['cli']
 			,cod_responsavel  : getCodResponsavel()
 			,ano_letivo 			: '2018'
 			,v  	: '1.0'
-			//,last_hash: last_hash
+			,last_hash: vm.last_hash
 		}).then(function successCallback(response) {
 			console.log(response);
 			var json = response.data.data;
-			
-			localStorage.setItem('homeWorkDados', JSON.stringify(json));
-			//localStorage.setItem('last_hash',response.data.metadata.last_hash);
-			
 			if(json.length == 0){
+				vm.homeworkDados = JSON.parse(localStorage.getItem('homeWorkDados'));
+				vm.qtdHomeworks = vm.homeworkDados.length;
+			}
+			else{
+				//get already existed Dados
+				if(localStorage.getItem('homeWorkDados') != null && localStorage.getItem('homeWorkDados')!= ""){
+					var oldDados = JSON.parse(localStorage.getItem('homeWorkDados'));
+					//check whether new cod_licao is already existed in old or not
+					var cod_licao_array = [];
+					for(var i= 0 ; i < oldDados.length; i++){
+						cod_licao_array.push(oldDados[i][0]);
+					}
+					alert(JSON.stringify(cod_licao_array));
+					//find index from array
+					for(var k=0 ; k<json.length; k++){
+						if(cod_licao_array.indexOf(json[k][0]) === -1){
+							oldDados.unshift(json[k]);
+						}
+						else{
+							var index = cod_licao_array.indexOf(json[k][0]);
+							oldDados[index] = json[k];
+						}
+						alert(json[k][0]);
+						alert(cod_licao_array.indexOf(json[k][0]));
+					}
+					//display and save
+					vm.homeworkDados = oldDados;
+					vm.qtdHomeworks = oldDados.length;
+					localStorage.setItem('homeWorkDados', JSON.stringify(oldDados));
+				}
+				else{
+					vm.homeworkDados = json;
+					vm.qtdHomeworks = vm.homeworkDados.length;
+					localStorage.setItem('homeWorkDados', JSON.stringify(json));
+				}
+				localStorage.setItem('last_hash',response.data.metadata.last_hash);
+				
 
+				
 			}
 
-			vm.homeworkDados = json;
-			vm.qtdHomeworks = vm.homeworkDados.length;
-
-		}, function errorCallback(response) {			
+		}, function errorCallback(response) {
 			if(localStorage.getItem('homeWorkDados') != null){
 				vm.homeworkDados = JSON.parse(localStorage.getItem('homeWorkDados'));
 				vm.qtdHomeworks = vm.homeworkDados.length;					
@@ -1499,6 +1531,7 @@ function HomeWkService($http){
 				cod_responsavel : cod_responsavel,
 				ano_letivo : ano_letivo,
 				v: v
+				,last_hash: last_hash
 			}
 		};
 
