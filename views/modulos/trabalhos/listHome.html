@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-md-12 sub-menu-tab">				    		
+		<span>Homework</span>
+		<!-- <a href="#" onclick="return false;" class="btn-add-chamado">
+			<i class="fa fa-plus-circle pull-right" aria-hidden="true"></i>
+		</a> -->
+	</div>						
+</div>
+
+
+
+<div class="row">
+	<ul>
+		<li ng-show="Aluno.qtdHomeworks == 0" class="sac-nenhum-recado">
+			Nenhum SAC
+		</li>
+
+		<li ng-repeat="homework in Aluno.homeworkDados" ng-show="Aluno.homeworkDados != 0" class="card card-sac" ng-click="Aluno.detalhesHw(homework)">
+			<span ng-switch on="homework[6]">
+				<button ng-switch-when="A Fazer" class="btn btn-primary homework-header">{{homework[6]}}</button>
+				<button ng-switch-when="Entregue" class="btn btn-success homework-header">{{homework[6]}}</button>
+				<button ng-switch-when="Atrasado" class="btn btn-info homework-header">{{homework[6]}}</button>
+				<button ng-switch-when="Não Entregue" class="btn btn-warning homework-header">{{homework[6]}}</button>
+				<button ng-switch-when="Incompleta" class="btn btn-danger homework-header">{{homework[6]}}</button>
+			</span>
+			<span>Entregar até  {{homework[4]}}</span>
+			<br>
+			<div class="homework-title"><span>{{homework[1]}}</span></div>
+			<br>
+			<div class="homework-mat"><span>{{homework[5]}}</span></div>
+			<div class="homework-prof"><span>{{homework[8]}}</span></div>
+			<div class="homework-solic"><span>{{homework[3]}}</span></div>
+
+		</li>
+		
+
+	</ul>
+
+</div> <!-- /.row -->

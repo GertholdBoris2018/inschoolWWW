@@ -271,6 +271,11 @@ angular.module('Aluno', [])
 			,controller: 'detalhesSacController'
 			,controllerAs: 'detalhesSacController'
 		})
+		.when('/detalhesHw/:param1',{
+			templateUrl: 'views/modulos/trabalhos/detailHomeWork.html'
+			,controller: 'detalhesHwController'
+			,controllerAs: 'detalhesHwController'
+		})
 		.when('/novoSac/:param1',{
 			templateUrl: 'views/modulos/sac/newSac.html'
 			,controller: 'novoSacController'
@@ -282,11 +287,13 @@ angular.module('Aluno', [])
 
 	}])
 	.service('AlunoService', AlunoService)
-	.service('SacService', SacService)	
-	.controller('AlunoController', ['AlunoService', 'SacService', '$location', '$fancyModal','$rootScope', AlunoController])	
+	.service('SacService', SacService)
+	.service('HomeWkService', HomeWkService)	
+	.controller('AlunoController', ['AlunoService', 'SacService', 'HomeWkService', '$location', '$fancyModal','$rootScope', AlunoController])	
 	.controller('detalhesRecadoController', ['AlunoService', 'SacService', '$location','$rootScope','$scope','$routeParams', detalhesRecadoController])	
 	.controller('detalhesSacController', ['AlunoService', 'SacService', '$location','$rootScope','$scope','$routeParams', detalhesSacController])
 	.controller('novoSacController', ['AlunoService', 'SacService', '$location','$rootScope','$scope','$routeParams', novoSacController])
+	.controller('detalhesHwController', ['$location','$rootScope','$scope','$routeParams', detalhesHwController])
 	//.factory('authInterceptor',  authInterceptor)	
 ;
 
@@ -510,11 +517,21 @@ function detalhesSacController(AlunoService, SacService, $location,$rootScope,$s
 	$scope.backlist = backlist;
 	function backlist(){
 		my_global_currenttab = 1;
+		$rootScope.tabindex = 4;
 		$location.path('/aluno/logado');
 	}
 	$rootScope.tabindex = 4;
 }
-
+function detalhesHwController($location,$rootScope,$scope,$routeParams){
+	$scope.title = $routeParams.param1;
+	$scope.backlist = backlist;
+	function backlist(){
+		my_global_currenttab = 1;
+		$rootScope.tabindex = 5;
+		$location.path('/aluno/logado');
+	}
+	$rootScope.tabindex = 5;
+}
 function detalhesRecadoController(AlunoService, SacService, $location,$rootScope,$scope,$routeParams){
 	$scope.title = $routeParams.param1;
 	$scope.backlist = backlist;
@@ -534,13 +551,16 @@ function novoSacController(AlunoService, SacService, $location,$rootScope,$scope
 	}
 	$rootScope.tabindex = 4;
 }
-function AlunoController(AlunoService, SacService, $location, $fancyModal, $rootScope){
+function AlunoController(AlunoService, SacService, HomeWkService, $location, $fancyModal, $rootScope){
 	var vm = this;
 	vm.url_escola = localStorage.getItem('url_escola');
 	vm.logins = JSON.parse(localStorage.getItem('logins'));
 	console.log('tabindex => ' + $rootScope.tabindex);
 	if(!$rootScope.tabindex)
 	$rootScope.tabindex = 1;
+	else{
+		vm.tabindex = $rootScope.tabindex;
+	}
 	vm.isResponsavel = function(){		
 		for(x in vm.logins){
 			if(vm.logins[x]['tipo'] == 'responsavel'){				
@@ -711,8 +731,32 @@ function AlunoController(AlunoService, SacService, $location, $fancyModal, $root
 				vm.qtdSacs = vm.sacDados.length;					
 			}		
 		});
-		esconderSpinner();
 
+		vm.homeworkDados = {};
+		const last_hash ="";
+		if(localStorage.getItem('last_hash')!= null){
+			last_hash = localStorage.getItem('last_hash');
+		}
+		HomeWkService.allHomeWorks({
+			cod_responsavel  : getCodResponsavel()
+			,ano_letivo 			: '2018'
+			,v  	: '1.0',
+			last_hash: last_hash
+		}).then(function successCallback(response) {
+			console.log(response);
+			var json = response.data.data;
+			localStorage.setItem('homeWorkDados', JSON.stringify(json));
+			localStorage.setItem('last_hash',response.data.metadata.last_hash);
+			
+			vm.homeworkDados = json;
+			vm.qtdHomeworks = vm.homeworkDados.length;
+		}, function errorCallback(response) {			
+			if(localStorage.getItem('homeWorkDados') != null){
+				vm.homeworkDados = JSON.parse(localStorage.getItem('homeWorkDados'));
+				vm.qtdHomeworks = vm.homeworkDados.length;					
+			}		
+		});
+		esconderSpinner();
 	}
 
 	
@@ -970,6 +1014,13 @@ function AlunoController(AlunoService, SacService, $location, $fancyModal, $root
 	};
 
 	vm.sacSelecionado = {};
+	vm.detalhesHw = detalhesHw;
+	function detalhesHw(homework){
+		my_global_currenttab = 101;
+		$location.path('/detalhesHw/HOMEWORK');
+		$rootScope.hw = homework;
+	}
+
 	vm.detalhesSac = detalhesSac;
 
 	function detalhesSac(sac){
@@ -1416,6 +1467,36 @@ function SacService($http){
 		return $http(request);
 	};
 
+}
+
+function HomeWkService($http){
+
+	///sac_por_perfil
+	///?dados=%7B"aberto_por":"18942","cli":"cabrini","aberto_perfil":"responsavel"%7D&isMeta=true
+	this.allHomeWorks = function(dados){
+		//console.log(customHeaders);
+		//dados.Authorization = customPost.Authorization;
+		const cod_responsavel = dados.cod_responsavel;
+		const ano_letivo = dados.ano_letivo;
+		const v = dados.v;
+		const last_hash = dados.last_hash;
+
+		mostrarSpinner();
+		const url 		= base_url + 'v2/free/licao-de-casa/licoes'
+		const method 	= 'GET';
+		const request 	= {
+			 url	: url
+			,method : method
+			,params : {
+				cod_responsavel : cod_responsavel,
+				ano_letivo : ano_letivo,
+				v: v
+			}
+		};
+
+		return $http(request);
+
+	};
 }
 
 function AlunoService($http){

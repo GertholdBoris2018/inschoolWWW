@@ -612,8 +612,33 @@ li.modulos_principais a{
     margin-top: 0px;
     font-weight: bold;
 }
-
-
+.homework-header{
+    font-size:12px;
+    margin-top:0px;
+    font-weight:bold;
+    width:100px;
+    height:30px;
+    line-height: 10px;
+}
+.homework-title span{
+    font-weight: bold;
+    padding:0 20px;
+}
+.homework-prof{
+    text-align: right;
+    padding:0 20px;
+}
+.homework-desc{
+    padding:0 20px;
+}
+.homework-solic{
+    text-align: right;
+    padding:0 20px;
+}
+.homework-mat{
+    padding:0 20px;
+    text-align:right;
+}
 .sac-nenhum-recado{
     padding: 10px;
     font-size: 25px;
@@ -743,7 +768,7 @@ li.modulos_principais a{
 
 
 .table-anexo tfoot tr td {
-    padding: : 0px;
+    padding:  0px;
 }
 
 
