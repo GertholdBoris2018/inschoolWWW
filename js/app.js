@@ -733,23 +733,30 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 		});
 
 		vm.homeworkDados = {};
-		const last_hash ="";
-		if(localStorage.getItem('last_hash')!= null){
-			last_hash = localStorage.getItem('last_hash');
-		}
+		// const last_hash ="";
+		// if(localStorage.getItem('last_hash')!= null){
+		// 	last_hash = localStorage.getItem('last_hash');
+		// }
 		HomeWkService.allHomeWorks({
-			cod_responsavel  : getCodResponsavel()
+			cli: vm.alunosResponsavel[x]['cli']
+			,cod_responsavel  : getCodResponsavel()
 			,ano_letivo 			: '2018'
-			,v  	: '1.0',
-			last_hash: last_hash
+			,v  	: '1.0'
+			//,last_hash: last_hash
 		}).then(function successCallback(response) {
 			console.log(response);
 			var json = response.data.data;
-			localStorage.setItem('homeWorkDados', JSON.stringify(json));
-			localStorage.setItem('last_hash',response.data.metadata.last_hash);
 			
+			localStorage.setItem('homeWorkDados', JSON.stringify(json));
+			//localStorage.setItem('last_hash',response.data.metadata.last_hash);
+			
+			if(json.length == 0){
+
+			}
+
 			vm.homeworkDados = json;
 			vm.qtdHomeworks = vm.homeworkDados.length;
+
 		}, function errorCallback(response) {			
 			if(localStorage.getItem('homeWorkDados') != null){
 				vm.homeworkDados = JSON.parse(localStorage.getItem('homeWorkDados'));
@@ -1476,13 +1483,14 @@ function HomeWkService($http){
 	this.allHomeWorks = function(dados){
 		//console.log(customHeaders);
 		//dados.Authorization = customPost.Authorization;
+		const cli = dados.cli;
 		const cod_responsavel = dados.cod_responsavel;
 		const ano_letivo = dados.ano_letivo;
 		const v = dados.v;
 		const last_hash = dados.last_hash;
 
 		mostrarSpinner();
-		const url 		= base_url + 'v2/free/licao-de-casa/licoes'
+		const url 		= base_url + 'v2/'+cli+'/licao-de-casa/licoes'
 		const method 	= 'GET';
 		const request 	= {
 			 url	: url

@@ -619,6 +619,7 @@ li.modulos_principais a{
     width:100px;
     height:30px;
     line-height: 10px;
+    padding:0;
 }
 .homework-title span{
     font-weight: bold;
@@ -630,6 +631,15 @@ li.modulos_principais a{
 }
 .homework-desc{
     padding:0 20px;
+    word-wrap:break-word;
+    display:block;
+}
+.homework-desc-list{
+    padding:0 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
 }
 .homework-solic{
     text-align: right;
