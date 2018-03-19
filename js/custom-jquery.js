@@ -3,9 +3,9 @@ $(document).ready(function() {
 	var lastfontAw = '';
 	
 
-	$(document).on('click', '#burger-menu-top', function(){
-		$('.tabs-principal li').removeClass('active');
-	});
+	// $(document).on('click', '#burger-menu-top', function(){
+	// 	$('.tabs-principal li').removeClass('active');
+	// });
 
 	$(document).on('click', '.modulos_secundarios', function(){
 		

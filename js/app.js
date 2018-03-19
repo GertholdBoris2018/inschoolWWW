@@ -517,7 +517,6 @@ function detalhesSacController(AlunoService, SacService, $location,$rootScope,$s
 	$scope.backlist = backlist;
 	function backlist(){
 		my_global_currenttab = 1;
-		$rootScope.tabindex = 4;
 		$location.path('/aluno/logado');
 	}
 	$rootScope.tabindex = 4;
@@ -527,10 +526,9 @@ function detalhesHwController($location,$rootScope,$scope,$routeParams){
 	$scope.backlist = backlist;
 	function backlist(){
 		my_global_currenttab = 1;
-		$rootScope.tabindex = 5;
 		$location.path('/aluno/logado');
 	}
-	$rootScope.tabindex = 5;
+	$rootScope.tabindex = 6;
 }
 function detalhesRecadoController(AlunoService, SacService, $location,$rootScope,$scope,$routeParams){
 	$scope.title = $routeParams.param1;
@@ -558,9 +556,6 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 	console.log('tabindex => ' + $rootScope.tabindex);
 	if(!$rootScope.tabindex)
 	$rootScope.tabindex = 1;
-	else{
-		vm.tabindex = $rootScope.tabindex;
-	}
 	vm.isResponsavel = function(){		
 		for(x in vm.logins){
 			if(vm.logins[x]['tipo'] == 'responsavel'){				
@@ -669,7 +664,8 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
       return vm.tab === tabNum;
     };
     
-
+	vm.homeworkDados = [];
+	vm.homeworkMetaDados = {};
 
 
 
@@ -729,38 +725,41 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 				vm.qtdSacs = vm.sacDados.length;					
 			}		
 		});
+		
+		homeHW(vm);
+		esconderSpinner();
+	}
 
+	function homeHW(vm){
 		//alert('here');
-		vm.homeworkDados = {};
-		if(localStorage.getItem('last_hash') != null){
-			vm.last_hash = localStorage.getItem('last_hash');
-		} else {
-			vm.last_hash = '';
-		}
-		alert(vm.last_hash);
+		
+
+		//alert(vm.homeworkMetaDados.v);
+		
+		//alert(vm.last_hash);
+		//get current year
+		const ano_letivo = (new Date()).getFullYear();
 		HomeWkService.allHomeWorks({
 			cli: vm.alunosResponsavel[x]['cli']
 			,cod_responsavel  : getCodResponsavel()
-			,ano_letivo 			: '2018'
-			,v  	: '1.0'
-			,last_hash: vm.last_hash
+			,ano_letivo 			: ano_letivo
+			,v  	: vm.homeworkMetaDados.v
+			,last_hash: vm.homeworkMetaDados.last_hash
 		}).then(function successCallback(response) {
 			console.log(response);
 			var json = response.data.data;
-			if(json.length == 0){
-				vm.homeworkDados = JSON.parse(localStorage.getItem('homeWorkDados'));
-				vm.qtdHomeworks = vm.homeworkDados.length;
-			}
-			else{
+			vm.homeworkMetaDados = response.data.metadata;
+			//alert(vm.homeworkMetaDados.v);
+			if(json.length > 0){
 				//get already existed Dados
-				if(localStorage.getItem('homeWorkDados') != null && localStorage.getItem('homeWorkDados')!= ""){
-					var oldDados = JSON.parse(localStorage.getItem('homeWorkDados'));
+				if(vm.homeworkDados.length > 0){
+					var oldDados = vm.homeworkDados;
 					//check whether new cod_licao is already existed in old or not
 					var cod_licao_array = [];
 					for(var i= 0 ; i < oldDados.length; i++){
 						cod_licao_array.push(oldDados[i][0]);
 					}
-					alert(JSON.stringify(cod_licao_array));
+					//alert(JSON.stringify(cod_licao_array));
 					//find index from array
 					for(var k=0 ; k<json.length; k++){
 						if(cod_licao_array.indexOf(json[k][0]) === -1){
@@ -770,34 +769,24 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 							var index = cod_licao_array.indexOf(json[k][0]);
 							oldDados[index] = json[k];
 						}
-						alert(json[k][0]);
-						alert(cod_licao_array.indexOf(json[k][0]));
+						//alert(json[k][0]);
+						//alert(cod_licao_array.indexOf(json[k][0]));
 					}
 					//display and save
 					vm.homeworkDados = oldDados;
 					vm.qtdHomeworks = oldDados.length;
-					localStorage.setItem('homeWorkDados', JSON.stringify(oldDados));
 				}
 				else{
 					vm.homeworkDados = json;
 					vm.qtdHomeworks = vm.homeworkDados.length;
-					localStorage.setItem('homeWorkDados', JSON.stringify(json));
 				}
-				localStorage.setItem('last_hash',response.data.metadata.last_hash);
-				
-
 				
 			}
 
 		}, function errorCallback(response) {
-			if(localStorage.getItem('homeWorkDados') != null){
-				vm.homeworkDados = JSON.parse(localStorage.getItem('homeWorkDados'));
-				vm.qtdHomeworks = vm.homeworkDados.length;					
-			}		
+				
 		});
-		esconderSpinner();
 	}
-
 	
 	vm.novoSac = {};
 	vm.novoSac = novoSac;
@@ -1518,8 +1507,8 @@ function HomeWkService($http){
 		const cli = dados.cli;
 		const cod_responsavel = dados.cod_responsavel;
 		const ano_letivo = dados.ano_letivo;
-		const v = dados.v;
-		const last_hash = dados.last_hash;
+		const v = typeof dados.v != 'undefined'? dados.v : '1.0';
+		const last_hash = typeof dados.last_hash != 'undefined'? dados.last_hash : '';
 
 		mostrarSpinner();
 		const url 		= base_url + 'v2/'+cli+'/licao-de-casa/licoes'

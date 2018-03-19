@@ -1,24 +1,21 @@
 <!-- angle-up -->
-<div ng-include="'views/aluno/header-recado.html'"></div>
+<div ng-include="'views/aluno/header-homework.html'"></div>
 <div class="container">
 	<main>
-		<hr class="hr-detalhes-page">
-		<div class="detalhe-recado-box card card-sac">
+		<div class="detalhe-recado-box card card-home">
 			<span ng-switch on="hw[6]">
 				<button ng-switch-when="A Fazer" class="btn btn-primary homework-header">{{hw[6]}}</button>
 				<button ng-switch-when="Entregue" class="btn btn-success homework-header">{{hw[6]}}</button>
 				<button ng-switch-when="Atrasado" class="btn btn-info homework-header">{{hw[6]}}</button>
-				<button ng-switch-when="Não Entregue" class="btn btn-warning homework-header">{{hw[6]}}</button>
-				<button ng-switch-when="Incompleta" class="btn btn-danger homework-header">{{hw[6]}}</button>
+				<button ng-switch-when="Não Entregue" class="btn btn-danger homework-header">{{hw[6]}}</button>
+				<button ng-switch-when="Incompleta" class="btn btn-warning homework-header">{{hw[6]}}</button>
 			</span>
 		
-			<div class="col-md-12" style="padding-left: 0px;">
-				<span>Entregar até  {{hw[4]}}</span>
-			</div>
+			<span>Entregar até  {{hw[4]}}</span>
 			<div class="homework-title"><span>{{hw[1]}}</span></div>
 			<br>
+			<p class="detalhe-recado-content" ng-bind-html="hw[2] | trustHTML"></p>
 			<div class="homework-mat"><span>{{hw[5]}}</span></div>
-			<div class="homework-desc"><span>{{hw[2]}}</span></div>
 			<div class="homework-prof"><span>{{hw[8]}}</span></div>
 			<div class="homework-solic"><span>{{hw[3]}}</span></div>
 		

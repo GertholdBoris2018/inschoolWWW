@@ -605,7 +605,10 @@ li.modulos_principais a{
     margin-top: 0px;
     margin: 4px;
 }
-
+.card-home{
+    margin:0;
+    padding: 10px;
+}
 .sac-header{
     font-size: 20px;
     
@@ -636,10 +639,7 @@ li.modulos_principais a{
 }
 .homework-desc-list{
     padding:0 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 500px;
+    word-wrap:break-word;
 }
 .homework-solic{
     text-align: right;
