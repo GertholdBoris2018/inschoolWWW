@@ -10,7 +10,7 @@
 						<span ng-show="Aluno.isResponsavel() && Aluno.alunosResponsavel.length == 1">Aluno</span>
 						<span ng-show="!Aluno.isResponsavel()">Aluno</span>						
 					</a>
-					<a class="fa fa-ellipsis-v burger-menu-top" id="burger-menu-top" onclick="return false;" aria-expanded="true"  href="#menu-opc" data-toggle="tab" ></a>
+					<a class="fa fa-ellipsis-v burger-menu-top" id="burger-menu-top" onclick="return false;" aria-expanded="true"  href="#menu-opc" data-toggle="tab" ng-click="Aluno.unsetMainTabEvent()"></a>
 				</div>
                 <div class="navbar-collapse collapse menu-body" id="bs-example-navbar-collapse-4" aria-expanded="false" style="height: 1px;">
                     <ul class="nav navbar-nav menu-alunos" ng-repeat="aluno in Aluno.alunosResponsavel">

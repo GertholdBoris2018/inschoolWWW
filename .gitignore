@@ -5,5 +5,5 @@ api/upload_files/clientes
 api/upload_files
 .jsdtscope
 /.settings/
-node_modules/
-bower_components/
+/bower_components/
+/node_modules/

@@ -441,7 +441,7 @@ function LoginController(LoginService, $location){
 		});
 	}
 
-	
+
 	//Mock-Escola-cod
 	vm.getEscolaTest = getEscolaTest;
 	function getEscolaTest(){
@@ -661,73 +661,103 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 	  $event.stopPropagation();
     };
 	vm.isSet = function(tabNum){
+		alert(tabNum);
       return vm.tab === tabNum;
     };
     
 	vm.homeworkDados = [];
 	vm.homeworkMetaDados = {};
+	vm.notificacoes = {};
+	vm.sacDados = {};
 
-
+	
+	vm.SQLiterecadosAlunos = "";
+	vm.SQLitesacDados = "";
+	vm.SQLitehomeWorkDados = "";
 
 	function getAllRecados(){
 		auxRequestRecados = [];	
-		
-		console.log('dados->', vm.alunosResponsavel);
-		for(x in vm.alunosResponsavel){
-			auxRequestRecados.push({
-				 rm  : vm.alunosResponsavel[x]['rm']
-				,cli : vm.alunosResponsavel[x]['cli']
-				,cod_responsavel : getCodResponsavel()
-				//,perfil : getCodResponsavel()
-			});
-		}
-		vm.notificacoes = {};
-		AlunoService.allRecados(auxRequestRecados)
-			.then(function successCallback(response) {
-				esconderSpinner();
-				var json = response.data;
-
-				localStorage.setItem('recadosAlunos', JSON.stringify(json));
-
-				vm.notificacoes = json;
-				vm.qtdNotificacoes = vm.notificacoes.length;				
-			
-			}, function errorCallback(response) {
-				esconderSpinner();
-				if(localStorage.getItem('recadosAlunos') != null){
-					vm.notificacoes = JSON.parse(localStorage.getItem('recadosAlunos'));
-					vm.recados = vm.notificacoes.length;					
+		my_global_sqliteDB.transaction(function(transaction) {
+			transaction.executeSql('SELECT * FROM localstorage', [], function (tx, results) {
+				vm.SQLiterecadosAlunos = results.rows.item(0).recadosAlunos;
+				vm.SQLitesacDados =  results.rows.item(0).sacDados;
+				vm.SQLitehomeWorkDados = results.rows.item(0).homeWorkDados;
+				
+				console.log('dados->', vm.alunosResponsavel);
+				for(x in vm.alunosResponsavel){
+					auxRequestRecados.push({
+						rm  : vm.alunosResponsavel[x]['rm']
+						,cli : vm.alunosResponsavel[x]['cli']
+						,cod_responsavel : getCodResponsavel()
+						//,perfil : getCodResponsavel()
+					});
 				}
-			
-			})
-		;
+				
+				AlunoService.allRecados(auxRequestRecados)
+					.then(function successCallback(response) {
+						esconderSpinner();
+						var json = response.data;
 
-		vm.sacDados = {};
+						my_global_sqliteDB.transaction(function(transaction) {
+							transaction.executeSql('UPDATE localstorage SET recadosAlunos=?', [JSON.stringify(json)], function (tx, results) {
+								//alert('updated');
+							}, null);
+						});
+						localStorage.setItem('recadosAlunos', JSON.stringify(json));
 
-		SacService.getSacDados({
-			 aberto_perfil  : 'responsavel'
-			,cli 			: vm.alunosResponsavel[x]['cli']
-			,aberto_por  	: getCodResponsavel()
-		}).then(function successCallback(response) {
-			//'data' é utilizado no datatables do site tmb xD
-			var json = response.data.dados;	
-			//console.log('sac Dados ->',  json);
+						vm.notificacoes = json;
+						vm.qtdNotificacoes = vm.notificacoes.length;				
+					
+					}, function errorCallback(response) {
+						esconderSpinner();
+						
+						if(vm.SQLiterecadosAlunos != null){
+							vm.notificacoes = JSON.parse(vm.SQLiterecadosAlunos);
+							vm.recados = vm.notificacoes.length;					
+						}
+					
+					})
+				;
 
-			localStorage.setItem('sacDados', JSON.stringify(json));
+				
 
-			vm.sacDados = json;
-			vm.qtdSacs = vm.sacDados.length;
-			//console.log(vm.qtdSacs);
+				SacService.getSacDados({
+					aberto_perfil  : 'responsavel'
+					,cli 			: vm.alunosResponsavel[x]['cli']
+					,aberto_por  	: getCodResponsavel()
+				}).then(function successCallback(response) {
+					//'data' é utilizado no datatables do site tmb xD
+					var json = response.data.dados;	
+					//console.log('sac Dados ->',  json);
 
-		}, function errorCallback(response) {
-			if(localStorage.getItem('sacDados') != null){
-				vm.sacDados = JSON.parse(localStorage.getItem('sacDados'));
-				vm.qtdSacs = vm.sacDados.length;					
-			}		
+					localStorage.setItem('sacDados', JSON.stringify(json));
+					my_global_sqliteDB.transaction(function(transaction) {
+						transaction.executeSql('UPDATE localstorage SET sacDados=?', [JSON.stringify(json)], function (tx, results) {
+							//alert('updated');
+						}, null);
+					});
+
+					vm.sacDados = json;
+					vm.qtdSacs = vm.sacDados.length;
+					//console.log(vm.qtdSacs);
+
+				}, function errorCallback(response) {
+					if(vm.SQLitesacDados != null){
+						vm.sacDados = JSON.parse(vm.SQLitesacDados);
+						vm.qtdSacs = vm.sacDados.length;					
+					}		
+				});
+				
+				homeHW(vm);
+
+				//sync for the main menu
+				syncMenu(vm);
+				esconderSpinner();
+
+			}, null);
 		});
+
 		
-		homeHW(vm);
-		esconderSpinner();
 	}
 
 	function homeHW(vm){
@@ -753,6 +783,7 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 			if(json.length > 0){
 				//get already existed Dados
 				if(vm.homeworkDados.length > 0){
+
 					var oldDados = vm.homeworkDados;
 					//check whether new cod_licao is already existed in old or not
 					var cod_licao_array = [];
@@ -762,32 +793,101 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 					//alert(JSON.stringify(cod_licao_array));
 					//find index from array
 					for(var k=0 ; k<json.length; k++){
-						if(cod_licao_array.indexOf(json[k][0]) === -1){
-							oldDados.unshift(json[k]);
+						//check hide field is 
+						//alert(json[k][9]);
+						if(json[k][9] != '0')//remove
+						{
+							var index = cod_licao_array.indexOf(json[k][0]);
+							//alert(index);
+							if(index !== -1){
+								oldDados.splice(index,1);
+							}
 						}
 						else{
-							var index = cod_licao_array.indexOf(json[k][0]);
-							oldDados[index] = json[k];
+							if(cod_licao_array.indexOf(json[k][0]) === -1){
+								oldDados.unshift(json[k]);
+							}
+							else{
+								var index = cod_licao_array.indexOf(json[k][0]);
+								oldDados[index] = json[k];
+							}
 						}
+						
+						
 						//alert(json[k][0]);
 						//alert(cod_licao_array.indexOf(json[k][0]));
 					}
 					//display and save
 					vm.homeworkDados = oldDados;
 					vm.qtdHomeworks = oldDados.length;
+					localStorage.setItem('homeWorkDados', JSON.stringify(oldDados));
+					my_global_sqliteDB.transaction(function(transaction) {
+						transaction.executeSql('UPDATE localstorage SET homeWorkDados=?', [JSON.stringify(oldDados)], function (tx, results) {
+							//alert('updated');
+						}, null);
+					});
+
 				}
 				else{
-					vm.homeworkDados = json;
+					for(var k=0 ; k<json.length; k++){
+						if(json[k][9] == '0')
+						vm.homeworkDados.push(json[k]);
+						
+						//alert(json[k][0]);
+						//alert(cod_licao_array.indexOf(json[k][0]));
+					}
 					vm.qtdHomeworks = vm.homeworkDados.length;
+					localStorage.setItem('homeWorkDados', JSON.stringify(json));
+					my_global_sqliteDB.transaction(function(transaction) {
+						transaction.executeSql('UPDATE localstorage SET homeWorkDados=?', [JSON.stringify(json)], function (tx, results) {
+							//alert('updated');
+						}, null);
+					});
 				}
-				
+				var rms = [];
+				for(x in vm.alunosResponsavel){
+					rms.push(vm.alunosResponsavel[x]['rm']);
+				}
+
+				for(x in vm.homeworkDados){
+					vm.homeworkDados[x][10] = 'test';
+					var rm = vm.homeworkDados[x][7];
+					//get name from rm index of array
+					if(rms.indexOf(rm) === -1){
+						vm.homeworkDados[x][10] = '';
+					}
+					else{
+						var index = rms.indexOf(rm);
+						vm.homeworkDados[x][10] = vm.alunosResponsavel[index]['nome_aluno'];
+					}
+				}
 			}
+			localStorage.setItem('homeWorkMetaDados', JSON.stringify(vm.homeworkMetaDados));
+			//alert(JSON.parse(localStorage.getItem('homeWorkMetaDados')));
+			//alert('hey');
 
 		}, function errorCallback(response) {
-				
+			if(vm.SQLitehomeWorkDados != null){
+				vm.homeworkDados = JSON.parse(vm.SQLitehomeWorkDados);
+				vm.qtdHomeworks = vm.homeworkDados.length;
+			}
 		});
 	}
 	
+	function syncMenu(vm){
+		AlunoService.syncMenu({cli:vm.alunosResponsavel[x]['cli']}).then(function successCallback(response) {
+			console.log(response.data);
+			//alert('success');
+			localStorage.setItem('modulos', JSON.stringify(response.data));
+			vm.modulos = response.data;
+		}, function errorCallback(response) {
+			//alert('error');
+			if(localStorage.getItem('modulos') != null){
+				vm.modulos = JSON.parse(localStorage.getItem('modulos'));
+			}
+		});
+
+	}
 	vm.novoSac = {};
 	vm.novoSac = novoSac;
 	function novoSac(){		
@@ -953,7 +1053,12 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 		// 	}]			
 		// });
 	};
-
+	vm.setTabEvent = function(param){
+		$rootScope.tabindex = param;
+	}
+	vm.unsetMainTabEvent = function(){
+		$rootScope.tabindex = 0;
+	}
 	vm.recadoSelecionado = {};
 	vm.detalhesRecado = detalhesRecado;
 	function detalhesRecado(recado){
@@ -1045,7 +1150,7 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 	vm.detalhesHw = detalhesHw;
 	function detalhesHw(homework){
 		my_global_currenttab = 101;
-		$location.path('/detalhesHw/HOMEWORK');
+		$location.path('/detalhesHw/Lição de casa');
 		$rootScope.hw = homework;
 	}
 
@@ -1544,6 +1649,21 @@ function AlunoService($http){
     	}
     }	
 	
+	this.syncMenu = function(dados){
+		const cli = dados.cli;
+	
+		mostrarSpinner();
+		const url 		= base_url + 'getModulosAtivosSyncMenu/'+cli;
+		//alert(url);
+		const method 	= 'GET';
+		const request 	= {
+			 url	: url
+			,method : method
+		};
+
+		return $http(request);
+	}
+
 	this.registerDeviceServer = function(data){
 		const method 	= 'POST';
 		const request 	= {

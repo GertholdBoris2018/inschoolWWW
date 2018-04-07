@@ -1,5 +1,5 @@
 <ul id="menu-modulos" class="nav nav-tabs tabs-4 tabs-principal">
-	<li ng-repeat="modulo in Aluno.modulos" class="modulos_principais" data-ng-class="{active: modulo.ordem == tabindex}">
+	<li ng-repeat="modulo in Aluno.modulos" class="modulos_principais" data-ng-class="{active: modulo.ordem == tabindex}" ng-click="Aluno.setTabEvent(modulo.ordem)">
 		<a data-toggle="tab" class="{{modulo.icon_src}}" href="#{{modulo.data_toggle}}" onclick="return false;">			
 		</a>		
 	</li>

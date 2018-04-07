@@ -324,6 +324,12 @@ h4.notificacoes-item{
     font-size: 33px;
 }
 
+.recado-kidname {
+    font-size: 14px;
+    padding:0 35px;
+}
+
+
 .recados-previa-text{
     font-size: 18px;
     margin: 0px;
@@ -331,6 +337,9 @@ h4.notificacoes-item{
     margin-bottom: 8px;
     min-height: 7px;
     font-weight: initial;
+    white-space: pre-wrap;
+
+
 }
 
 .nav-tabs>li {
@@ -546,7 +555,9 @@ li.modulos_principais a{
 }
 
 .detalhe-recado-content{
-    font-size: 13px;
+    font-size: 18;
+    font-weight: initial;
+    white-space: pre-wrap;
 }
 
 .detalhe-separator{
@@ -600,6 +611,7 @@ li.modulos_principais a{
 }
 
 
+}
 .card-sac{
     padding: 10px;
     margin-top: 0px;
@@ -625,9 +637,16 @@ li.modulos_principais a{
     padding:0;
 }
 .homework-title span{
+    font-size:17px;
     font-weight: bold;
     padding:0 20px;
 }
+.homework-kidname {
+    font-size: 14px;
+    padding:0 20px;
+}
+
+
 .homework-prof{
     text-align: right;
     padding:0 20px;
