@@ -985,9 +985,13 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 				//get teacher list from distinct teachers
 				$rootScope.sacTeachers = getTeachersVals(selectedRm);
 				$rootScope.showTeacherField = true;
+				$rootScope.professor_require = true; 
 			}
 			else{
+				$rootScope.sacTeachers = [];
 				$rootScope.showTeacherField = false;
+				$rootScope.professor_require = false;
+				
 			}
 		}
 

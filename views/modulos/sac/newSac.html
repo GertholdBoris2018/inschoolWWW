@@ -31,7 +31,7 @@
 					</select>		
 		
 					<span class="error-field" ng-show="submitted == true && formNovoSac.cod_professor.$error.required">Obrigatório</span>
-					<select ng-show="showTeacherField == true" class="inschool-select" name="cod_fila" ng-model="dados.cod_professor" ng-options="item.cod_professor as item.nome_completo for item in sacTeachers track by item.cod_professor" required>
+					<select ng-show="showTeacherField == true" class="inschool-select" name="cod_professor" ng-model="dados.cod_professor" ng-options="item.cod_professor as item.nome_completo for item in sacTeachers track by item.cod_professor"  ng-required = "professor_require">
 						<option value="" disabled selected>Escolha a Professor</option>		    
 					</select>
 					

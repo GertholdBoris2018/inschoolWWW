@@ -17,10 +17,10 @@
 
 							<li ng-repeat="sac in Aluno.sacDados" ng-show="Aluno.qtdSacs != 0" class="card card-sac" ng-click="Aluno.detalhesSac(sac)">
 								<span ng-switch on="sac.cod_status">
-									<button ng-switch-when="1" class="btn btn-danger homework-header">Incompleta</button>
-									<button ng-switch-when="2" class="btn btn-primary homework-header">A Fazer</button>
-									<button ng-switch-when="3" class="btn btn-warning homework-header">Não Entregue</button>
-									<button ng-switch-when="4" class="btn btn-success homework-header">Entregue</button>
+									<button ng-switch-when="1" class="btn btn-danger homework-header">{{sac.status_nome}}</button>
+									<button ng-switch-when="2" class="btn btn-primary homework-header">{{sac.status_nome}}</button>
+									<button ng-switch-when="3" class="btn btn-warning homework-header">{{sac.status_nome}}</button>
+									<button ng-switch-when="4" class="btn btn-success homework-header">{{sac.status_nome}}</button>
 								</span>
 								<span>Criado em {{sac.aberto_em}}</span>
 								<h3 class="sac-header">{{sac.assunto}}</h3>
