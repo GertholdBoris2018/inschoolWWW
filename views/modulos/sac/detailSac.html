@@ -1,23 +1,50 @@
 <!-- angle-up -->
 <div ng-include="'views/aluno/header-recado.html'"></div>
+<div class="col-md-12" ng-show="sac.cod_status!='4'">
+	<button class="form-control btn btn-success btn-encerrar-sac" style="margin:0px;" ng-click="encerrarSac(sac.cod_sac)" ng-show="sac.status_nome!='Fechado'">
+		<span class="glyphicon glyphicon glyphicon-ok"></span> Encerrar Solicitação
+	</button>
+</div>
+
+<div class="card card-sac ng-binding ng-scope">
+	<span ng-switch on="sac.cod_status">
+		<button ng-switch-when="1" class="btn btn-danger homework-header">Incompleta</button>
+		<button ng-switch-when="2" class="btn btn-primary homework-header">A Fazer</button>
+		<button ng-switch-when="3" class="btn btn-warning homework-header">Não Entregue</button>
+		<button ng-switch-when="4" class="btn btn-success homework-header">Entregue</button>
+	</span>
+	<span>Criado em {{sac.aberto_em}}</span>
+	<h3 class="sac-header">{{sac.assunto}}</h3>
+	{{sac.anotacoes[0].anotacao}}
+	<br/>
+	{{sac.nome_aluno}}
+	<br/>
+	{{sac.professor}}
+</div>
+<!-- 
 <div class="container">
 	<main>
-		<hr class="hr-detalhes-page">
-		<div class="detalhe-recado-box">
-			<h5 style="text-align: center">{{sac.assunto}}</h5>	
+		<div class="detalhe-recado-box card card-sac ng-binding ng-scope"> -->
+			<!-- <h5 style="text-align: center">{{sac.assunto}}</h5>	 -->
 		
-		
-			<div class="col-md-12" style="padding-left: 0px;">
-		        <button class="form-control btn btn-success btn-encerrar-sac" ng-click="encerrarSac(sac.cod_sac)" ng-show="sac.status_nome!='Fechado'">
-					<span class="glyphicon glyphicon glyphicon-ok"></span> Encerrar Solicitação
-				</button>					
-				Aberto em : {{sac.aberto_em}}
-			</div>
-		
-		
-			<div class="panel panel-default" ng-repeat="anotacao in sac.anotacoes">
-				
-				<div class="panel-heading detalheSac-heading">
+			<div ng-repeat="anotacao in sac.anotacoes" ng-show="!$first">
+
+				<div ng-show="anotacao.enviado_perfil == 'responsavel' || anotacao.enviado_perfil == 'aluno'" class="talk-bubble tri-right round right-in">
+					<div class="talktext">
+						<p style='font-weight:bold;'>{{anotacao.anotacao}}</p>
+						<p class='postedDate' style='float:right;'>{{anotacao.enviado_em}}</p>
+					</div>
+				</div>
+
+				<div ng-hide="anotacao.enviado_perfil == 'responsavel' || anotacao.enviado_perfil == 'aluno'" class="talk-bubble tri-right round left-in">
+					<div class="talktext">
+						<p style='font-weight:bold;'>{{anotacao.enviado_nome}}</p>
+						<p style='font-weight:bold;'>{{anotacao.anotacao}}</p>
+						<p class='postedDate' style='float:right;'>{{anotacao.enviado_em}}</p>
+					</div>
+				</div>
+
+				<!-- <div class="panel-heading detalheSac-heading">
 		
 					<div class="footer-sac-anotacao">
 						{{anotacao.enviado_nome}}<br />{{anotacao.enviado_em}}
@@ -27,7 +54,7 @@
 						<button ng-show="0" class="btn btn-danger btn-trash" ng-click="removerSacAnotacao(anotacao)"><span class="glyphicon glyphicon glyphicon-trash detalheSac-trash"></span></button>
 					</div>
 					
-				</div>
+				</div> -->
 		
 				<table class="table table-responsive table-striped table-arquivos-sac" ng-show="anotacao.arquivos.length != 0">
 					<thead>
@@ -44,14 +71,14 @@
 						</tr>
 					</tbody>
 				</table>		
-				
+<!-- 				
 				<div class="panel-body detalheSac-body">
 					{{anotacao.anotacao}}
 					
-				</div>
+				</div> -->
 			</div>
 			
-			<h3   ng-show="sac.status_nome!='Fechado'" style="font-size: 22px;">Nova Anotação:</h3>
+			<!-- <h3   ng-show="sac.status_nome!='Fechado'" style="font-size: 22px;">Nova Anotação:</h3> -->
 
 		
 		
@@ -60,33 +87,45 @@
 			-->
 		
 		
-		    <form ng-submit="formNovoSac.$valid && adicionarNovaAnotacao(dados)"  ng-show="sac.status_nome!='Fechado'" name="formNovoSac" novalidate>
-
+		    <form ng-submit="formNovoSac.$valid && adicionarNovaAnotacao(dados)"  ng-show="sac.cod_status!='4'" name="formNovoSac" novalidate>
 				<div class="md-form">
 					<span class="error-field" ng-show="submitted == true && formNovoSac.anotacao.$error.required">Obrigatório</span>
-					<textarea ng-model="dados.anotacao" name="anotacao" class="form-control" placeholder="Preencha a mensagem" style="padding: 2px;height: 70px;" required></textarea>
+					<div class="">
+						<div class="input-group" style="background-color:#f4edd9;">
+							<input ng-model="dados.anotacao" name="anotacao" style="height:50px; border-radius:30px;" class="form-control input-sm" placeholder="Preencha a mensagem" required></textarea>
+							<span class="input-group-btn">
+								<button type="submit" name="action" class="btn btn-success btn-sm btn-send" style="border-radius:50%;width:50px;height:50px;margin:0px;" ng-click="submitted = true" >
+									<i class="glyphicon glyphicon-send" style="margin-right:5px;"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+					
 				</div>
-<!--		
-				<div ng-include="'views/aluno/formSac.html'"></div>		
-	-->	
-				<div class="text-center">
+				<!-- <div ng-include="'views/aluno/formSac.html'"></div>		 -->
+	
+				<!-- <div class="text-center">
 					<button type="submit" name="action" class="btn btn-default btn-xs btn-size-med btn-laranja" ng-click="submitted = true" style="width: 90%;">Cadastrar Anotação</button>
-				</div>		
-		
+				</div> -->
+				<!-- <span class="error-field" ng-show="submitted == true && formNovoSac.anotacao.$error.required">Obrigatório</span>
+				
+				<div class="panel-footer" style="margin-top:100px;">
+					<div class="input-group">
+						<input id="txtEntrar" type="text" class="form-control input-sm" placeholder="Enter a user name in the field below for the chat room">
+						<span class="input-group-btn">
+							<button id="btnEntrar" class="btn btn-success btn-sm">Enter</button>
+						</span>
+					</div>
+				</div>	 -->
 			</form>
-		
+			
 			<!-- 
 			<hr>
 			<button ng-click="showMyVm()">Show VM</button>
 			-->
 		
-		
-		
-		
-			
-		
-		</div>
+		<!-- </div>
 </main>
-</div>
+</div> -->
 
 

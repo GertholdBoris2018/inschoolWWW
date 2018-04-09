@@ -15,15 +15,26 @@
 		
 				<div>
 					<span class="error-field" ng-show="submitted == true && formNovoSac.cod_fila.$error.required">Obrigatório</span>
-					<select class="inschool-select" name="cod_fila" ng-model="dados.cod_fila" ng-options="key as value for (key , value) in sacFilas track by key" required>
+					<!-- <select class="inschool-select" name="cod_fila" ng-model="dados.cod_fila" ng-options="key as value for (key , value) in sacFilas track by key" ng-change="sacAreaSelected(dados.cod_fila)" required>
+						<option value="" disabled selected>Escolha a Área</option>		    
+					</select> -->
+
+					<select class="inschool-select" name="cod_fila" ng-model="dados.cod_fila" ng-options="item.cod_fila as item.fila_nome for item in sacFilas track by item.cod_fila" ng-change="sacAreaSelected(dados.cod_fila,dados.sac_rm)" required>
 						<option value="" disabled selected>Escolha a Área</option>		    
 					</select>
+
+					
 		
 					<span class="error-field" ng-show="submitted == true && formNovoSac.sac_rm.$error.required">Obrigatório</span>
-					<select class="inschool-select" name="sac_rm" ng-model="dados.sac_rm" data-ng-options="fila.rm as fila.nome_aluno for fila in sacFilhos" required>
+					<select class="inschool-select" name="sac_rm" ng-model="dados.sac_rm" data-ng-options="fila.rm as fila.nome_aluno for fila in sacFilhos" ng-change="sacAreaSelected(dados.cod_fila,dados.sac_rm)" required>
 						<option value="" disabled selected>Escolha o filho(a)</option>
 					</select>		
 		
+					<span class="error-field" ng-show="submitted == true && formNovoSac.cod_professor.$error.required">Obrigatório</span>
+					<select ng-show="showTeacherField == true" class="inschool-select" name="cod_fila" ng-model="dados.cod_professor" ng-options="item.cod_professor as item.nome_completo for item in sacTeachers track by item.cod_professor" required>
+						<option value="" disabled selected>Escolha a Professor</option>		    
+					</select>
+					
 					<span class="error-field" ng-show="submitted == true && formNovoSac.cod_categoria.$error.required">Obrigatório</span>
 					<select class="inschool-select" name="cod_categoria" ng-model="dados.cod_categoria" ng-options="key as value for (key , value) in sacCategorias track by key" required>
 						<option value="" disabled selected>Escolha a Categoria</option>

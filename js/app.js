@@ -752,11 +752,14 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 
 				//sync for the main menu
 				syncMenu(vm);
+				//get teacher name depends cil and kid
+				getTeachersResponseval(vm);
 				esconderSpinner();
 
 			}, null);
 		});
 
+		
 		
 	}
 
@@ -874,6 +877,20 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 		});
 	}
 	
+	function getTeachersResponseval(vm){
+		AlunoService.getTeachers({ cli:vm.alunosResponsavel[x]['cli'], cod_responsavel: getCodResponsavel()}).then(function successCallback(response) {
+			
+			var dataObj = response.data;
+			var tdados = dataObj[vm.alunosResponsavel[x]['cli']];
+			//alert(JSON.stringify(tdados));
+			localStorage.setItem('teachers', JSON.stringify(tdados));
+			//alert('success');
+			
+		}, function errorCallback(response) {
+			//alert('error');
+			
+		});
+	}
 	function syncMenu(vm){
 		AlunoService.syncMenu({cli:vm.alunosResponsavel[x]['cli']}).then(function successCallback(response) {
 			console.log(response.data);
@@ -907,13 +924,13 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 			formNovoSac.aberto_perfil = getPerfilTipo();//Novo
 			formNovoSac.aberto_por = getCodResponsavel();//Novo
 
-
 			if(formNovoSac.file_unico != null){
 				formNovoSac.arquivos = [];
 				formNovoSac.arquivos.push(formNovoSac.file_unico);
 			}
 
-
+			
+			//alert(JSON.stringify(dados));
 			
 			SacService.saveNovoSac(formNovoSac).then(function successCallback(response) {
 				var json = response.data;
@@ -940,16 +957,56 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 				
 			});					
 		};				
-
+		function findObjectByKey(array, key, value) {
+			for (var i = 0; i < array.length; i++) {
+				if (array[i][key] === value) {
+					return array[i];
+				}
+			}
+			return null;
+		}
 		var cliSac = JSON.parse(localStorage.getItem('cli'));
 		SacService.getSacFilas(cliSac).then(function successCallback(response) {						
 				//console.log(response.data.dados);
-				$rootScope.sacFilas = response.data.dados;
+				//alert(JSON.stringify(response.data));
+				//$rootScope.sacFilas = response.data.dados;
+				$rootScope.sacFilas = response.data;
 			}, function errorCallback(response) {			
 			
 			})
 		;
+		$rootScope.sacAreaSelected = function(selectedSac, selectedRm){
+			//alert(selectedRm);
+			//var tipo_professor = $rootScope.dados.tipo_professor;
+			var selected = findObjectByKey($rootScope.sacFilas, 'cod_fila', selectedSac);
+			//alert(JSON.stringify(tipo_professor));
+			var tipo_professor = selected.tipo_professor;
+			if(tipo_professor == '1'){
+				//get teacher list from distinct teachers
+				$rootScope.sacTeachers = getTeachersVals(selectedRm);
+				$rootScope.showTeacherField = true;
+			}
+			else{
+				$rootScope.showTeacherField = false;
+			}
+		}
 
+		function getTeachersVals(selectedRm){
+			var teachers = JSON.parse(localStorage.getItem('teachers'));
+			var teachersArray = [];
+			if(typeof selectedRm !== 'undefined'){
+				teachersArray = teachers[selectedRm];
+			}
+			else{
+				Object.keys(teachers).forEach(function (key){
+					teachers[key].forEach(function(item){
+						if(findObjectByKey(teachersArray, 'cod_professor' , item.cod_professor) == null)
+							teachersArray.push(item);
+					});
+				});
+			}
+			return teachersArray;
+		}
 		var auxDoAux = {
 				cli: JSON.parse(localStorage.getItem('cli'))[0]
 			,cod_responsavel : getCodResponsavel()
@@ -1059,6 +1116,7 @@ function AlunoController(AlunoService, SacService, HomeWkService, $location, $fa
 	vm.unsetMainTabEvent = function(){
 		$rootScope.tabindex = 0;
 	}
+	
 	vm.recadoSelecionado = {};
 	vm.detalhesRecado = detalhesRecado;
 	function detalhesRecado(recado){
@@ -1505,7 +1563,8 @@ function SacService($http){
 	};
 	
 	this.getSacFilas = function(cli){		
-		const url 		= base_url + 'sac_fila' + '/' + cli ;		
+		//const url 		= base_url + 'sac_fila' + '/' + cli ;		
+		const url 		= base_url + 'v2' + '/' + cli + '/sac/fila' ;		
 		const method 	= 'GET';
 		const request 	= {
 			 url	: url
@@ -1654,6 +1713,22 @@ function AlunoService($http){
 	
 		mostrarSpinner();
 		const url 		= base_url + 'getModulosAtivosSyncMenu/'+cli;
+		//alert(url);
+		const method 	= 'GET';
+		const request 	= {
+			 url	: url
+			,method : method
+		};
+
+		return $http(request);
+	}
+
+	this.getTeachers = function(dados){
+		const cli = dados.cli;
+		const cod_responsavel = dados.cod_responsavel;
+
+		mostrarSpinner();
+		const url 		= base_url + 'v2/'+cli + '/sac/professores-responsavel/' + cod_responsavel;
 		//alert(url);
 		const method 	= 'GET';
 		const request 	= {
